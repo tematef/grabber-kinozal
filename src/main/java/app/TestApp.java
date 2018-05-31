@@ -17,29 +17,13 @@ import static pages.Login.navigateTo;
 import static util.BrowserManager.getChromeDriverPath;
 
 public class TestApp {
-
-    private static String user = "tematef";
-    private static String password = "123asdQQ";
-    private static String userNameXpath = ".//input[@name = 'username']";
-    private static String userPassXpath = ".//input[@name = 'password']";
-    private static String loginButtonXpath = ".//div[@id = 'main']//input[@type = 'submit']";
-    private WebDriver driver;
-
-    @Test
-    public void aa() {
-        System.getProperty("user.dir");
-        boolean b1 = FileUtil.createFile("settings.gradle").isFileExists();
-        boolean b2 = FileUtil.createFile("src").isFolderExists();
-        FileUtil.createFile(GRABBED_DATA_FOLDER.getValue()).safeMkdir();
-        FileUtil.createFile(GRABBED_DATA_FOLDER.getValue() + File.separator + UHD_RELEASE.getValue()).safeFileCreate();
-    }
+    DriverFactory driverFactory = new DriverFactory();
 
     @Test
     public void test1() {
         String chromePath = getChromeDriverPath();
         System.setProperty("webdriver.chrome.driver", chromePath);
-        driver = DriverFactory.getDriver();
-        driver.manage().deleteAllCookies();
+        WebDriver driver = driverFactory.getDriver();
 
         Login login = navigateTo(driver);
         login.login(Credentials.getCredentials());
@@ -79,7 +63,7 @@ public class TestApp {
 
     @After()
     public void close() {
-        DriverFactory.tearDown();
+        driverFactory.tearDown();
     }
 
 }

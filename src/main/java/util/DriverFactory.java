@@ -9,20 +9,20 @@ import static util.BrowserManager.createChromeConfig;
 
 public class DriverFactory {
 
-    private static WebDriver driver;
+    private WebDriver driver;
 
-    public static WebDriver getDriver() {
+    public WebDriver getDriver() {
         setup();
         return driver;
     }
 
-    private static void setup() {
+    private void setup() {
         driver = new ChromeDriver(createChromeConfig());
         driver = new EventFiringWebDriver(driver).register(new WebEventListener());
-
+        driver.manage().deleteAllCookies();
     }
 
-    public static void tearDown() {
+    public void tearDown() {
         if (driver != null) {
             driver.close();
             driver.quit();

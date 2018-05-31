@@ -2,7 +2,6 @@ package pages;
 
 import objects.Credentials;
 import objects.MovieRowData;
-import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import util.Properties;
@@ -13,9 +12,9 @@ import java.util.stream.Collectors;
 
 public class Login {
 
-    private static String userNameXpath = ".//input[@name = 'username']";
-    private static String userPassXpath = ".//input[@name = 'password']";
-    private static String loginButtonXpath = ".//div[@id = 'main']//input[@type = 'submit']";
+    private static String USER_NAME_XPATH = ".//input[@name = 'username']";
+    private static String USER_PASS_XPATH = ".//input[@name = 'password']";
+    private static String LOGIN_BUTTON_XPATH = ".//div[@id = 'main']//input[@type = 'submit']";
     private static String RESULTS_TABLE_XPATH = ".//table[contains(@class, 'peer')]//tr[position() > 1]";
     private WebDriver driver;
 
@@ -23,10 +22,10 @@ public class Login {
         this.driver = driver;
     }
 
-    public void login(@NotNull Credentials creds) {
-        driver.findElement(By.xpath(userNameXpath)).sendKeys(creds.getUsername());
-        driver.findElement(By.xpath(userPassXpath)).sendKeys(creds.getPassword());
-        driver.findElement(By.xpath(loginButtonXpath)).click();
+    public void login(Credentials creds) {
+        driver.findElement(By.xpath(USER_NAME_XPATH)).sendKeys(creds.getUsername());
+        driver.findElement(By.xpath(USER_PASS_XPATH)).sendKeys(creds.getPassword());
+        driver.findElement(By.xpath(LOGIN_BUTTON_XPATH)).click();
     }
 
     public List<MovieRowData> searchElemnts(String searchUrl) {
