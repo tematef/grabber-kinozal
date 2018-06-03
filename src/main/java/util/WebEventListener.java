@@ -8,7 +8,7 @@ import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
 
 import java.util.Arrays;
 
-public class WebEventListener extends AbstractWebDriverEventListener {
+class WebEventListener extends AbstractWebDriverEventListener {
 
 
     @Override

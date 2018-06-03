@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class FileUtil {
+class FileUtil {
 
     private static final String USER_DIR_PATH = System.getProperty("user.dir");
 //    private String localPath;

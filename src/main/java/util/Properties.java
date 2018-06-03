@@ -3,7 +3,7 @@ package util;
 import java.io.IOException;
 import java.net.URL;
 
-public class Properties {
+class Properties {
 
     private static java.util.Properties properties;
 

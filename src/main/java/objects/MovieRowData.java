@@ -1,11 +1,15 @@
 package objects;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.Objects;
+
 public class MovieRowData {
 
-    private String name;
+    private String nameRu;
+    private String nameEng;
     private int seeds;
     private String size;
 
@@ -13,7 +17,8 @@ public class MovieRowData {
 
     private MovieRowData(WebElement webElement) {
         String[] longName = webElement.findElement(By.xpath("./td[2]")).getText().trim().split("/");
-        this.name = longName[0] + longName[1];
+        this.nameRu = longName[0];
+        this.nameEng = longName[0];
         this.seeds = Integer.parseInt(webElement.findElement(By.xpath("./td[3]")).getText().trim());
         this.size = webElement.findElement(By.xpath("./td[4]")).getText().trim();
     }
@@ -22,12 +27,20 @@ public class MovieRowData {
         return new MovieRowData(webElement);
     }
 
-    public String getName() {
-        return name;
+    public String getNameRu() {
+        return nameRu;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNameRu(String nameRu) {
+        this.nameRu = nameRu;
+    }
+
+    public String getNameEng() {
+        return nameEng;
+    }
+
+    public void setNameEng(String nameEng) {
+        this.nameEng = nameEng;
     }
 
     public int getSeeds() {
@@ -50,24 +63,27 @@ public class MovieRowData {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         MovieRowData that = (MovieRowData) o;
-
-        if (seeds != that.seeds) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        return size != null ? size.equals(that.size) : that.size == null;
+        return seeds == that.seeds &&
+                Objects.equals(nameRu, that.nameRu) &&
+                Objects.equals(nameEng, that.nameEng) &&
+                Objects.equals(size, that.size);
     }
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + seeds;
-        result = 31 * result + (size != null ? size.hashCode() : 0);
-        return result;
+
+        return Objects.hash(nameRu, nameEng, seeds, size);
     }
 
     @Override
     public String toString() {
-        return this.name + " " + this.seeds + " " + this.size;
+        return this.nameRu +
+                StringUtils.SPACE +
+                this.nameEng +
+                StringUtils.SPACE +
+                this.seeds +
+                StringUtils.SPACE +
+                this.size;
     }
 }
