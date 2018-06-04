@@ -1,11 +1,12 @@
 package hello;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 import apiclient.KinozalApiClient;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import pages.UIGrabber;
 
 @RestController
 public class GrabController {
@@ -23,5 +24,10 @@ public class GrabController {
     @RequestMapping("/status")
     public String status() {
         return String.format(STATUS_TEMPLATE, new KinozalApiClient().getStatusCode());
+    }
+
+    @RequestMapping("/grab")
+    public @ResponseBody List<String> grab(@RequestParam(value="request") String request) {
+        return new UIGrabber().getDistinctResults(request).stream().map(item -> item.toString()).collect(Collectors.toList());
     }
 }

@@ -11,16 +11,16 @@ public class MovieRowData {
     private String nameRu;
     private String nameEng;
     private int seeds;
-    private String size;
+    private float size;
 
     private MovieRowData() { }
 
     private MovieRowData(WebElement webElement) {
         String[] longName = webElement.findElement(By.xpath("./td[2]")).getText().trim().split("/");
         this.nameRu = longName[0];
-        this.nameEng = longName[0];
+        this.nameEng = longName[1];
         this.seeds = Integer.parseInt(webElement.findElement(By.xpath("./td[3]")).getText().trim());
-        this.size = webElement.findElement(By.xpath("./td[4]")).getText().trim();
+        this.size = Float.valueOf(webElement.findElement(By.xpath("./td[4]")).getText().replaceAll("[^0-9.]", ""));
     }
 
     public static MovieRowData createMovieRowData(WebElement webElement) {
@@ -51,11 +51,11 @@ public class MovieRowData {
         this.seeds = seeds;
     }
 
-    public String getSize() {
+    public float getSize() {
         return size;
     }
 
-    public void setSize(String size) {
+    public void setSize(float size) {
         this.size = size;
     }
 
@@ -65,9 +65,9 @@ public class MovieRowData {
         if (o == null || getClass() != o.getClass()) return false;
         MovieRowData that = (MovieRowData) o;
         return seeds == that.seeds &&
+                Float.compare(that.size, size) == 0 &&
                 Objects.equals(nameRu, that.nameRu) &&
-                Objects.equals(nameEng, that.nameEng) &&
-                Objects.equals(size, that.size);
+                Objects.equals(nameEng, that.nameEng);
     }
 
     @Override
