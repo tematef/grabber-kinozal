@@ -2,11 +2,14 @@ package hello;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
 
 import apiclient.KinozalApiClient;
+import objects.MovieRowData;
 import org.springframework.web.bind.annotation.*;
 import pages.UIGrabber;
+import util.SearchQueryBuilder;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
 public class GrabController {
@@ -26,8 +29,17 @@ public class GrabController {
         return String.format(STATUS_TEMPLATE, new KinozalApiClient().getStatusCode());
     }
 
-    @RequestMapping("/grab")
-    public @ResponseBody List<String> grab(@RequestParam(value="request") String request) {
-        return new UIGrabber().getDistinctResults(request).stream().map(item -> item.toString()).collect(Collectors.toList());
+    @RequestMapping(value = "/grab/{request}", method = GET)
+    @ResponseBody
+    public List<MovieRowData> grab(@PathVariable("request") String request) {
+        return new UIGrabber().getDistinctResults(request);
+    }
+
+    @RequestMapping(value = "/grab/movie/quality/{quality}/year/{year}/text/{text}", method = GET)
+    @ResponseBody
+    public List<MovieRowData> grabMovies(@PathVariable("quality") String quality,
+                                         @PathVariable("year") String year,
+                                         @RequestParam(value = "text", defaultValue = "") String text) {
+        return new UIGrabber().getDistinctResults(SearchQueryBuilder.buildMovieSearch(text, quality, year));
     }
 }

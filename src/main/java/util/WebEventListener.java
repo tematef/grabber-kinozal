@@ -13,12 +13,12 @@ class WebEventListener extends AbstractWebDriverEventListener {
 
     @Override
     public void beforeNavigateTo(String url, WebDriver driver) {
-        System.out.println("Navigating to url:%s" + url);
+        System.out.println(String.format("Navigating to url:%s", url));
     }
 
     @Override
     public void afterNavigateTo(String url, WebDriver driver) {
-        System.out.println("Navigated to url:%s" + url);
+        System.out.println(String.format("Navigated to url:%s", url));
     }
 
 

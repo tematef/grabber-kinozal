@@ -11,7 +11,7 @@ class BrowserManager {
 
     static ChromeOptions createChromeConfig() {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
+//        options.addArguments("--headless");
         options.addArguments("--blink-settings=imagesEnabled=false");
         options.addArguments("--allow-running-insecure-content");
         options.addArguments("-disable-cache");
